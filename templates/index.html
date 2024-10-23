@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planning App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Meal Planning App</h1>
+        <form id="macro-form">
+            <div class="input-group">
+                <label for="proteins">Proteins (g):</label>
+                <input type="number" id="proteins" name="proteins" step="0.1" required>
+            </div>
+            <div class="input-group">
+                <label for="carbs">Carbohydrates (g):</label>
+                <input type="number" id="carbs" name="carbs" step="0.1" required>
+            </div>
+            <div class="input-group">
+                <label for="fats">Fats (g):</label>
+                <input type="number" id="fats" name="fats" step="0.1" required>
+            </div>
+            <div class="input-group">
+                <label for="calories">Calories (kcal):</label>
+                <input type="number" id="calories" name="calories" required>
+            </div>
+            <button type="submit">Get Meal Suggestions</button>
+        </form>
+
+        <h2>Suggested Meals</h2>
+        <ul id="meal-suggestions"></ul>
+    </div>
+
+    <script>
+        document.getElementById('macro-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch('/suggest_meals', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const mealList = document.getElementById('meal-suggestions');
+                mealList.innerHTML = '';
+
+                if (data.length > 0) {
+                    data.forEach(meal => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>${meal.name}</strong> 
+                                        (Proteins: ${meal.proteins}g, Carbs: ${meal.carbs}g, Fats: ${meal.fats}g, Calories: ${meal.calories} kcal)`;
+                        mealList.appendChild(li);
+                    });
+                } else {
+                    mealList.innerHTML = '<li>No meals match your macro-nutrient requirements.</li>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

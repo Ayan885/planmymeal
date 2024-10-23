@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Grilled Chicken with Rice",
+        "proteins": 40,
+        "carbs": 60,
+        "fats": 10,
+        "calories": 500
+    },
+    {
+        "name": "Avocado Toast",
+        "proteins": 8,
+        "carbs": 30,
+        "fats": 15,
+        "calories": 320
+    },
+    {
+        "name": "Protein Smoothie",
+        "proteins": 25,
+        "carbs": 20,
+        "fats": 5,
+        "calories": 250
+    },
+    {
+        "name": "Salmon with Vegetables",
+        "proteins": 35,
+        "carbs": 20,
+        "fats": 15,
+        "calories": 450
+    }
+]
